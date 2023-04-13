@@ -12,6 +12,7 @@ echo $dataArray[0] . " de " . $meses[$mes] . " de " . $dataArray[2];
 
 
 $contato = new stdClass(); //obj dinamico
+
 $contato->nome = 'Laura';
 $contato->telefone = '99999888';
 

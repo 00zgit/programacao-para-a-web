@@ -2,9 +2,9 @@
 
 namespace Acme;
 
-public interface RepositorioProduto{
+interface IRepositorioProduto{
 	function salvar(array $produtos);
-	function carregar();
+	function carregar(): array;
 }
 
 ?>

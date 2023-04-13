@@ -11,9 +11,13 @@ class ImpressoraConsole implements IImpressora{
 }
 class ImpressoraArquivo implements IImpressora{
   function Imprime($string){
-    $conteudoDoArquivo = @file_get_contents("impressora.txt");
-
-    //...
+    // Obtém o conteúdo do arquivo como string
+    $conteudo = @file_get_contents( 'saida.txt' );
+    if ( $conteudo === false ) { // Arquivo não existe
+        $conteudo = '';
+    }
+    // Guarda o conteúdo no arquivo como string
+    file_put_contents( 'saida.txt', $conteudo . $valor );
   }
 }
 
