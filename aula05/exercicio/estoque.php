@@ -30,9 +30,9 @@ do{
 	try{
 		switch($input){
 			case ADD : addEstoque(); break;
-			case RM : rmEstoque($produtos[$id]); break;
-			case SAVE : # break;
-			case LOAD : # break;
+			case RM : rmEstoque(); break;
+			case SAVE : salvarProdutos($produtos) break;
+			case LOAD : carregarProdutos($produtos) break;
 			CASE SAIR : break;
 			default : echo PHP_EOL, 'Escolha inválida', PHP_EOL;
 		}
@@ -43,8 +43,18 @@ do{
 }while($input != SAIR);
 
 
+function salvarProdutos( array $produtos ) {
+    $repo = new RepositorioProdutoCSV();
+    $repo->salvar( $produtos );
+}
 
-function addEstoque($prod){
+function carregarProdutos( array &$produtos ) {
+    $repo = new RepositorioProdutoCSV();
+    $produtos = $repo->carregar();
+}
+
+
+function addEstoque(){
 	$id = buscar($produtos);
 	foreach($produtos as &$produto){
         if ($produto->getCodigo() == $codigo){
@@ -57,7 +67,7 @@ function addEstoque($prod){
         }
     }
 }
-function rmEstoque($prod){
+function rmEstoque(){
 	$id = buscar($produtos);
 	foreach($produtos as &$produto){
         if ($produto->getCodigo() == $codigo){
