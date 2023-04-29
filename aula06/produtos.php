@@ -6,7 +6,7 @@ require_once 'mediator.php';
 
 $pdo = conexao();
 
-public function listarTodos()
+function listarTodos()
 {
 	$ps = $pdo->query("SELECT * FROM produto");
 	$produtos = $ps->fetchAll();
@@ -14,12 +14,12 @@ public function listarTodos()
 	return $produtos;
 }
 
-public function listarPorPalavraChave(string $palavra)
+function listarPorPalavraChave(string $palavra)
 {
 
 }
 
-public function printProdutos(array $a)
+function printProdutos(array $a)
 {
 	foreach($a as $p)
 	{
