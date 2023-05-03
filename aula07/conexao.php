@@ -12,7 +12,7 @@ function GET_CONNECTION()
 		$pdo = null;
 		$pdo = new PDO
 		(
-			'mysql:host=localhost;dbname=banco;port=3308;charset=UTF8', 
+			'mysql:host=localhost;dbname=banco;port=3306;charset=UTF8', 
 			'root', '', 
 			$options
 		);
@@ -23,7 +23,7 @@ function GET_CONNECTION()
 		die('Connection error: ' . $e->getMessage());
 	}
 	
-	
+	echo PHP_EOL, "Connected to database", PHP_EOL;
 }
 
 ?>

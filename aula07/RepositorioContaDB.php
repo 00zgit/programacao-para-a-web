@@ -14,61 +14,64 @@ class RepositorioContaDB implements IRepositorioConta
   public function cadastrar(Conta $conta)
   {
     try{
-      $sql = 'INSERT INTO conta (dono,cpf,senha,saldo) VALUES ?, ?, ?, ?';
+      $sql = 'INSERT INTO conta (dono,cpf,senha,saldo) VALUES (?, ?, ?, ?)';
       $ps = $this->pdo->prepare($sql);
       $ps->execute([
         $conta->dono,
         $conta->cpf,
-        $conta-> meuHash( $conta->senha ),
+        $conta->meuHash(),
         $conta->saldo
       ]);
     }catch(PDOException $e){
-      throw new RepositorioException('Erro no cadastro ', $e->getMessage());
+      throw new RepositorioException('Erro no cadastro: ' . $e->getMessage());
     }
   }
 
   public function listarContas()
   {
     try{
-      $sql = 'SELECT dono,cpf,saldo FROM conta;';
+      $sql = 'SELECT * FROM conta';
       $ps = $this->pdo->prepare($sql, [PDO::FETCH_ASSOC]);
-      $registros = $ps->execute();
-      
+
+      // Opção 1
+      $ps->execute();
       $contas = [];
-      foreach( $registros as $conta )
+      foreach( $ps as $conta )
       {
-        $conta []= new Conta(
+        $contas []= new Conta(
+          $conta['id'],
           $conta['dono'],
           $conta['cpf'],
           '',
           $conta['saldo']
         );
       }
+      // Opção 2
+      /*
+      $contas = [];
+      foreach($obj = $ps->fetchObject()){
+        $contas []= new Conta($obj->dono, ...);
+      }
+      */
 
       return $contas;
 
     }catch(PDOException $e){
-      throw new RepositorioException('Erro na listagem ', $e->getMessage());
+      throw new RepositorioException('Erro na listagem: ' . $e->getMessage());
     }
   }
 
   public function depositar()
   {
     $cpf = readline('CPF destino: ');
-    $cpf = readline('Senha destino: ');
     $montante = readline('Montante: ');
 
     try{
       $sql = '';
       //...
     }catch(PDOException $e){
-      throw new RepositorioException('Erro no depósito ', $e->getMessage());
+      throw new RepositorioException('Erro no depósito: ' . $e->getMessage());
     }
-  }
-
-  public function meuHash($string)
-  {
-    return hash('sha256', $string . '##SUPER_SECRET_SALT##');
   }
 } //$end
 
