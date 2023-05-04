@@ -30,7 +30,7 @@ class RepositorioContaDB implements IRepositorioConta
   public function listarContas()
   {
     try{
-      $sql = 'SELECT * FROM conta';
+      $sql = 'SELECT id,dono,cpf,saldo FROM conta';
       $ps = $this->pdo->prepare($sql, [PDO::FETCH_ASSOC]);
 
       // Opção 1
@@ -61,21 +61,54 @@ class RepositorioContaDB implements IRepositorioConta
     }
   }
 
-  public function depositar()
+  public function depositar($cpf, $montante)
   {
-    $cpf = readline('CPF destino: ');
-    $montante = readline('Montante: ');
-
     try{
-      $sql = '';
-      //...
+      $sql = 'UPDATE conta SET saldo = saldo + ? WHERE cpf = ?';
+      $ps = $this->pdo->prepare($sql);
+      $ps->execute([$montante,$cpf]);
+
+      if($ps->rowCount() < 1){
+        return false;
+      }
+
     }catch(PDOException $e){
       throw new RepositorioException('Erro no depósito: ' . $e->getMessage());
     }
+
+    return true;
+  }
+
+  public function transferir($origem,$destino,$montante)
+  {
+    try{
+      $this->pdo->beginTransaction();
+      $sql1 = 'UPDATE conta SET saldo = saldo - ? WHERE cpf = ? AND saldo >= ?';
+      $sql2 = 'UPDATE conta SET saldo = saldo + ? WHERE cpf = ?';
+
+      $ps = $this->pdo->prepare($sql1);
+      $ps->execute([$montante,$origem,$montante]);
+      if($ps->rowCount() < 1){
+        $this->pdo->rollBack();
+        throw new ContaException('Erro: conta origem inexistente ou saldo insuficiente');
+      }
+
+      $ps = $this->pdo->prepare($sql2);
+      $ps->execute([$montante,$destino]);
+      if($ps->rowCount() < 1){
+        $this->pdo->rollBack();
+        throw new ContaException('Erro: conta destino inexistente');
+      }
+
+      $this->pdo->commit();
+    }catch(PDOException $e){
+      $this->pdo->rollBack();
+      throw new RepositorioException('Erro ao realizar a transferência entre contas.', $e->getCode(), $e);
+    }
+
+    echo PHP_EOL, 'Sucesso', PHP_EOL;
+
+    return true;
   }
 } //$end
-
-
-
-
 ?>

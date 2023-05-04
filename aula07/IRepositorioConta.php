@@ -1,6 +1,6 @@
 <?php
 
-require_once 'RepositorioException.php';
+require_once 'BancoException.php';
 
 interface IRepositorioConta
 {
@@ -26,7 +26,15 @@ interface IRepositorioConta
    * @return true ou false
    * @throws RepositorioException
    */
-  function depositar();
+  function depositar(string $cpf, string $montante);
+
+  /**
+   * Permite a transferência entre duas contas
+   * 
+   * @return true ou false
+   * @throws ContaException
+  */
+  function transferir(string $origem, string $destino, string $montante);
 }
 
 ?>
