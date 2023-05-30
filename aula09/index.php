@@ -100,9 +100,9 @@ $materiasprimas = $repoMP->PegarTodasMateriasPrimas();
 					<td>$mp[id]</td>
 					<td>$mp[nome]</td>
 					<td>$mp[quantidade]</td>
-					<td>$mp[unidade_id]</td>
+					<td>$mp[sigla]</td>
 					<td>$mp[preco]</td>
-					<td>$mp[categoria_id]</td>
+					<td>$mp[categoria]</td>
 					<td><a href="deletar.php?id=$mp[id]">DEL</a></td>
 				</tr>
 				html;

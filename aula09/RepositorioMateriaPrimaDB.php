@@ -1,7 +1,4 @@
 <?php
-
-
-
 class RepositorioMateriaPrimaDB
 {
   private $pdo;
@@ -27,9 +24,9 @@ class RepositorioMateriaPrimaDB
     try
     {
       $ps = $this->pdo->prepare(
-        'SELECT * FROM materia_prima mp', [PDO::FETCH_ASSOC]);
+        'SELECT mp.id,mp.nome,mp.quantidade,mp.preco,c.nome AS categoria, u.sigla FROM materia_prima mp INNER JOIN categoria c ON mp.categoria_id = c.id INNER JOIN unidade u ON mp.unidade_id = u.id', [PDO::FETCH_ASSOC]);
       $ps->execute();
-      return $ps->fetchAll(); // POO e converter os ids em objetos!!!
+      return $ps->fetchAll();
     }catch(PDOException $e){
       var_dump($e);
     }
