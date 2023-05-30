@@ -1,0 +1,37 @@
+1) A indústria Acme precisa controlar suas matérias-primas, utilizadas
+   no processo produtivo. Uma matéria-prima possui descrição, quantidade,
+   custo e categoria. Uma categoria possui nome.
+   Dessa forma, crie uma pequena aplicação PHP para a web, capaz de
+   manter as informações das matérias-primas. Nela, é preciso:
+   
+    a) Ter as entidades modeladas como classes;
+    b) Ter repositório(s) para abstrair a persistência dos dados;
+    c) Ter um banco de dados relacional MySQL normalizado, com as
+       tabelas correspondentes.
+    As funcionalidades requeridas são:
+        i)  Listagem das matérias-primas com suas categorias, em forma
+            de tabela. No fim da listagem deve ter a média de custo
+            das matérias-primas.
+        ii) Cadastro de matéria-prima, com a seleção da categoria através
+            de um campo de seleção (select).
+        iii) Alteração de matérias-primas, que deve exibir todos os campos,
+            incluindo a categoria de forma selecionada.
+        iv) Remoção da matéria-prima.
+
+
+
+2) A indústria Acme entrou em contato informando que precisa adicionar o dado de
+   unidade de medida à matéria-prima. Uma Unidade de Medida possui descrição e sigla.
+   Exemplos: "Gramas", sigla "g"; "Kilogramas", sigla "Kg"; "Metros", sigla "m".
+   
+   Assim:
+   
+   a) modifique a listagem de matérias-primas para exibir, ao lado da quantidade,
+   a sigla da Unidade de Medida. A implementação deve criar as entidades e repositórios 
+   necessários, bem como prover as alterações no banco de dados.
+   
+   b) Modifique o cadastro e a alteração de Matéria-Prima para exibir um campo de 
+   seleção (select) com as Unidade de Medida, logo após a quantidade. Cada opção
+   deve exibir a sigla seguida do nome, no formato "sigla - descrição". Por exemplo,
+   "Kg - Kilogramas". Ao exibir para alteração, a Unidade de Medida da Matéria-Prima
+   deve aparecer já selecionada.

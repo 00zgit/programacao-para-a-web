@@ -2,9 +2,9 @@
 require_once 'conexao.php';
 $pdo = GET_CONNECTION();
 
-$id = htmlspecialchars( $_GET['id'] );
-$nome = htmlspecialchars( $_GET['nome'] );
-$telefone = htmlspecialchars( $_GET['telefone'] );
+$id = htmlspecialchars( $_POST['id'] );
+$nome = htmlspecialchars( $_POST['nome'] );
+$telefone = htmlspecialchars($_POST['telefone'] );
 try{
   $ps = $pdo->prepare('UPDATE contato SET nome = ?, telefone = ? WHERE id = ?');
   $ps->execute([$nome,$telefone,$id]);

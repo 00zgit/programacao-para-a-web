@@ -1,0 +1,31 @@
+DROP DATABASE IF EXISTS aula09;
+
+CREATE DATABASE aula09;
+
+USE aula09;
+
+CREATE TABLE categoria (
+  id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+  nome VARCHAR(30) UNIQUE NOT NULL
+) ENGINE = INNODB;
+
+CREATE TABLE unidade (
+  id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+  descricao VARCHAR(30) UNIQUE NOT NULL,
+  sigla CHAR(2) NOT NULL
+) ENGINE = INNODB;
+
+CREATE TABLE materia_prima (
+  id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+  nome VARCHAR(30) UNIQUE NOT NULL,
+  quantidade INT NOT NULL,
+  preco NUMERIC(8,2) NOT NULL,
+  categoria_id INT,
+  unidade_id INT,
+  CONSTRAINT fk_materia_prima_categoria_id
+    FOREIGN KEY (categoria_id) REFERENCES categoria(id)
+    ON UPDATE CASCADE ON DELETE RESTRICT,
+  CONSTRAINT fk_materia_prima_unidade_id
+    FOREIGN KEY (unidade_id) REFERENCES unidade(id)
+    ON UPDATE CASCADE ON DELETE RESTRICT
+) ENGINE = INNODB;
