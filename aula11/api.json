@@ -1,0 +1,19 @@
+{
+  "contatos" :[
+    {
+      "id": 1,
+      "nome": "Rodrigo",
+      "telefone": "1234456789"
+    },
+    {
+      "id": 2,
+      "nome": "Rodrigo",
+      "telefone": "1234456789"
+    },
+    {
+      "id": 3,
+      "nome": "Rodrigo",
+      "telefone": "1234456789"
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+npm i -g pnpm
+
+pnpm init
+
+pnpm i -D json-server
+
+
+
+
+{arquivo.json}
+
+
+
+
+
+npx json-server api.json --watch
+
+
+
+
+{utilize o curl para manipular os conteudos}
+
+curl http://localhost:3000/contatos
+curl http://localhost:3000/contatos -X GET
+curl http://localhost:3000/contatos/1 -X DELETE
+curl http://localhost:3000/contatos/1 -X POST "{\"id\":1, \"nome\":\"Rodrigo\", \"telefone\":\"123456789\" }" -H "Content-Type: application/json"
+
+
+
+
+
+
+
+
+
+
+
+{
+  "contatos" :[
+    {
+      "id": 1,
+      "nome": "Rodrigo",
+      "telefone": "1234456789"
+    },
+    {
+      "id": 2,
+      "nome": "Rodrigo",
+      "telefone": "1234456789"
+    },
+    {
+      "id": 3,
+      "nome": "Rodrigo",
+      "telefone": "1234456789"
+    }
+  ]
+}
