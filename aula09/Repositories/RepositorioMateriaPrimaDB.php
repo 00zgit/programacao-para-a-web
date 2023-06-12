@@ -1,4 +1,7 @@
 <?php
+
+require_once __DIR__ . '/../Models/MateriaPrima.php';
+
 class RepositorioMateriaPrimaDB
 {
   private $pdo;
@@ -8,12 +11,12 @@ class RepositorioMateriaPrimaDB
     $this->pdo = $pdo;
   }
 
-  public function cadastrar($nome, $quantidade, $preco, $categoriaId, $unidadeId)
+  public function cadastrar(MateriaPrima $materiaPrima)
   {
     try
     {
       $ps = $this->pdo->prepare('INSERT INTO materia_prima (nome,quantidade,preco,categoria_id,unidade_id) VALUES (?,?,?,?,?)');
-      $ps->execute([$nome,$quantidade,$preco,$categoriaId,$unidadeId]);
+      $ps->execute([$materiaPrima->nome,$materiaPrima->quantidade,$materiaPrima->preco,$materiaPrima->categoria,$materiaPrima->unidade]);
     }catch(PDOException $e){
       var_dump($e);
     }

@@ -1,5 +1,7 @@
 <?php
 
+require_once __DIR__ . '/../Models/Categoria.php';
+
 class RepositorioCategoriaDB
 {
   private $pdo;
@@ -9,12 +11,12 @@ class RepositorioCategoriaDB
     $this->pdo = $pdo;
   }
 
-  public function cadastrar($nome)
+  public function cadastrar(Categoria $categoria)
   {
     try
     {
       $ps = $this->pdo->prepare('INSERT INTO categoria (nome) VALUES (?)');
-      $ps->execute([$nome]);
+      $ps->execute([$categoria->nome]);
     }catch(PDOException $e){
       var_dump($e);
     }

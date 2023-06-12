@@ -1,5 +1,7 @@
 <?php
 
+require_once __DIR__ . '/../Models/Unidade.php';
+
 class RepositorioUnidadeDB
 {
   private $pdo;
@@ -21,12 +23,12 @@ class RepositorioUnidadeDB
     }
   }
 
-  public function cadastrar($nome,$sigla)
+  public function cadastrar(Unidade $unidade)
   {
     try
     {
       $ps = $this->pdo->prepare('INSERT INTO unidade (descricao,sigla) VALUES (?,?)');
-      $ps->execute([$nome,$sigla]);
+      $ps->execute([$unidade->nome,$unidade->sigla]);
     }catch(PDOException $e){
       var_dump($e);
     }

@@ -1,8 +1,8 @@
 <?php 
-require_once 'RepositorioCategoriaDB.php';
-require_once 'RepositorioUnidadeDB.php';
-require_once 'RepositorioMateriaPrimaDB.php';
-require_once 'conexao.php';
+require_once './Repositories/RepositorioCategoriaDB.php';
+require_once './Repositories/RepositorioMateriaPrimaDB.php';
+require_once './Repositories/RepositorioUnidadeDB.php';
+require_once './Repositories/db/conexao.php';
 
 $repoC = new RepositorioCategoriaDB(GET_CONNECTION());
 $repoU = new RepositorioUnidadeDB(GET_CONNECTION());
@@ -23,7 +23,7 @@ $materiasprimas = $repoMP->PegarTodasMateriasPrimas();
 </head>
 <body>
 	<h2>CADASTRAR MATÉRIA-PRIMA</h2>
-	<form method="POST" action="Controller.php">
+	<form method="POST" action="./Controllers/Controller.php">
 		<select required name="categoria">
 			<option selected disabled>Categoria</option>
 			<?php
@@ -59,7 +59,7 @@ $materiasprimas = $repoMP->PegarTodasMateriasPrimas();
 	<br>
 
 	<h2>CADASTRAR CATEGORIA</h2>
-	<form method="POST" action="Controller.php">
+	<form method="POST" action="./Controllers/Controller.php">
 		<input type="text" name="nome_categoria" placeholder="Nome" required>
 		<input type="submit">
 	</form>
@@ -67,7 +67,7 @@ $materiasprimas = $repoMP->PegarTodasMateriasPrimas();
 	<br>
 
 	<h2>CADASTRAR UNIDADE</h2>
-	<form method="POST" action="Controller.php">
+	<form method="POST" action="./Controllers/Controller.php">
 		<input type="text" name="nome_unidade" placeholder="Descrição (ex.: Kilograma, Metro, Grama, Litro)" required>
 		<input type="text" name="sigla" placeholder="Sigla (ex.: Kg, m, g, L)" required>
 		<input type="submit">
@@ -103,7 +103,7 @@ $materiasprimas = $repoMP->PegarTodasMateriasPrimas();
 					<td>$mp[sigla]</td>
 					<td>$mp[preco]</td>
 					<td>$mp[categoria]</td>
-					<td><a href="deletar.php?id=$mp[id]">DEL</a></td>
+					<td><a href="./Repositories/functions/deletar.php?id=$mp[id]">DEL</a></td>
 				</tr>
 				html;
 			}
