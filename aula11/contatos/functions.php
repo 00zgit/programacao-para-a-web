@@ -1,71 +1,100 @@
 <?php
 
-function load()
-{
-  $content = file_get_contents('contatos.json');
-  $obj = json_decode($content);
-  header('Content-Type: application/json');
-  return $obj->contatos;
-}
+require_once 'file.php';
 
 
 function printContatos()
 {
-
 	$contatos = load();
-	echo http_response_code( 200 ), PHP_EOL, json_encode($contatos, JSON_PRETTY_PRINT);
+	$acceptHeader = getallheaders()['Accept'];
+
+	if($acceptHeader == 'text/html')
+	{
+		header('Content-Type: text/html');
+		echo '<table><tr><th>Nome</th><th>Telefone</th></tr>';
+		echo '<tbody>';
+		foreach($contatos as $c)
+			echo '<tr><td>' . $c->nome . '</td><td>' . $c->telefone . '</td>';
+		echo '</tbody></table>';
+	}
+	else
+	{
+		header('Content-Type: application/json');
+		echo json_encode($contatos, JSON_PRETTY_PRINT);
+	}
 }
-
-function printContatoById($id)
+function printContato($id)
 {
-	header( 'Content-Type: application/json' );
-	$contato;
-	$achou = false;
 	$contatos = load();
+	$contato = null;
+	
 	foreach($contatos as $c)
 	{
 		if($c->id == $id){
-		  $contato = json_encode( $c, JSON_PRETTY_PRINT );
-		  $achou = true;
+		  $contato = $c;
 		  break;
 		}
 	}
-	if(!$achou){
-		echo http_response_code( 404 );
+	if($contato){
+		header('Content-Type: application/json');
+		echo json_encode($contato, JSON_PRETTY_PRINT);
 	}
 	else{
-		echo http_response_code( 200 ), PHP_EOL, $contato;
+		http_response_code(404);
 	}
 }
 
+
 function delete($id)
 {
-	$achou = false;
 	$contatos = load();
+	$encontrado = false;
+	
 	foreach($contatos as $indice => $c)
 	{
 		if($c->id == $id)
 		{
 			unset($contatos[$indice]);
-			salvar($contatos);
-			$achou = true;
+			$encontrado = true;
 		  break;
 		}
 	}
-	if(!$achou){
-		echo http_response_code( 404 );
+	if($encontrado){
+		save($contatos);
+		http_response_code( 200 );
 	}
 	else{
-		echo http_response_code( 200 ), PHP_EOL;
+		http_response_code( 404 );
 	}
 }
 
-function salvar($contatos)
+function cadastrar()
 {
-	$obj = new stdClass();
-	$obj->contatos = $contatos;
-	$str = json_encode($obj);
-	file_put_contents('contatos.json', $str);
+	$contatos = load();
+	$data = getDataByType();
+	$id = newID();
+	$data['id'] = $id;
+	$contatos []= $data;
+	save($contatos);
+	http_response_code( 200 );
+}
+
+function getDataByType()
+{
+	$tipoConteudo = getallheaders()['Content-Type'];
+  $dadosContato = [];
+
+  if($tipoConteudo == 'application/json')
+  {
+  	$str = file_get_contents('php://input');
+  	$dadosContato = (array) json_decode( $str );
+  }
+  else if($tipoConteudo == 'application/x-www-form-urlencoded')
+  {
+  	$dadosContato = $_POST;
+  }
+
+  return $dadosContato;
 }
 
 ?>

@@ -2,6 +2,7 @@
 
 require_once 'functions.php';
 
+
 $metodo = $_SERVER['REQUEST_METHOD'];
 $url = $_SERVER['REQUEST_URI'];
 
@@ -13,17 +14,20 @@ if($metodo == 'GET' && preg_match("/^\/contatos\/?$/i", $url))
 else if ($metodo == 'GET' && preg_match("/^\/contatos\/([0-9]+)\/?$/i", $url, $casamentos))
 {
   [,$id] = $casamentos;
-  printContatoById($id);
+  printContato($id);
 }
 else if($metodo == 'DELETE' && preg_match("/^\/contatos\/([0-9]+)\/?$/i", $url, $casamentos))
 {
   [,$id] = $casamentos;
   delete($id);
-  printContatos();
+}
+else if($metodo == 'POST' && preg_match('/^\/contatos\/?$/i', $url))
+{
+  cadastrar();
 }
 else
 {
-  echo http_response_code( 500 );
+  http_response_code( 405 );
 }
 
 ?>
