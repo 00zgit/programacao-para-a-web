@@ -76,7 +76,7 @@ function cadastrar()
 	$data['id'] = $id;
 	$contatos []= $data;
 	save($contatos);
-	http_response_code( 200 );
+	http_response_code( 204 );
 }
 
 function getDataByType()
@@ -96,5 +96,3 @@ function getDataByType()
 
   return $dadosContato;
 }
-
-?>
