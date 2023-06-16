@@ -14,17 +14,6 @@ function listarTodos()
 	return $produtos;
 }
 
-function listarPorPalavraChave(string $palavra)
-{
-
-}
-
-function printProdutos(array $a)
-{
-	foreach($a as $p)
-	{
-		echo ;
-	}
-}
+//...
 
 ?>
