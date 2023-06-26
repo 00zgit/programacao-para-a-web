@@ -50,5 +50,5 @@ foreach($pereciveis as $obj)
 
 foreach($vencidos as $v)
 {
-	echo $v, PHP_EOL;
+	echo $v;
 }
