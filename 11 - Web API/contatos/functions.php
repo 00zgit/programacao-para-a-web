@@ -16,11 +16,13 @@ function printContatos()
 		foreach($contatos as $c)
 			echo '<tr><td>' . $c->nome . '</td><td>' . $c->telefone . '</td>';
 		echo '</tbody></table>';
+		http_response_code( 200 );
 	}
 	else
 	{
 		header('Content-Type: application/json');
 		echo json_encode($contatos, JSON_PRETTY_PRINT);
+		http_response_code( 200 );
 	}
 }
 function printContato($id)
@@ -35,9 +37,10 @@ function printContato($id)
 		  break;
 		}
 	}
-	if($contato){
+	if($contato != null){
 		header('Content-Type: application/json');
 		echo json_encode($contato, JSON_PRETTY_PRINT);
+		http_response_code( 200 );
 	}
 	else{
 		http_response_code(404);
@@ -56,7 +59,7 @@ function delete($id)
 		{
 			unset($contatos[$indice]);
 			$encontrado = true;
-		  break;
+		  	break;
 		}
 	}
 	if($encontrado){
@@ -82,17 +85,17 @@ function cadastrar()
 function getDataByType()
 {
 	$tipoConteudo = getallheaders()['Content-Type'];
-  $dadosContato = [];
+	$dadosContato = [];
 
-  if($tipoConteudo == 'application/json')
-  {
-  	$str = file_get_contents('php://input');
-  	$dadosContato = (array) json_decode( $str );
-  }
-  else if($tipoConteudo == 'application/x-www-form-urlencoded')
-  {
-  	$dadosContato = $_POST;
-  }
+	if($tipoConteudo == 'application/json')
+	{
+		$str = file_get_contents('php://input');
+		$dadosContato = (array) json_decode( $str );
+	}
+	else if($tipoConteudo == 'application/x-www-form-urlencoded')
+	{
+		$dadosContato = $_POST;
+	}
 
-  return $dadosContato;
+	return $dadosContato;
 }

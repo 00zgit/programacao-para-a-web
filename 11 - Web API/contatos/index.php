@@ -11,17 +11,17 @@ if($metodo == 'GET' && preg_match("/^\/contatos\/?$/i", $url))
 {
   printContatos();
 }
-else if ($metodo == 'GET' && preg_match("/^\/contatos\/([0-9]+)\/?$/i", $url, $casamentos))
+else if ($metodo == 'GET' && preg_match("/^\/contatos\/([0-9]+)\/?$/", $url, $casamentos))
 {
   [,$id] = $casamentos;
   printContato($id);
 }
-else if($metodo == 'DELETE' && preg_match("/^\/contatos\/([0-9]+)\/?$/i", $url, $casamentos))
+else if($metodo == 'DELETE' && preg_match("/^\/contatos\/([0-9]+)\/?$/", $url, $casamentos))
 {
   [,$id] = $casamentos;
   delete($id);
 }
-else if($metodo == 'POST' && preg_match('/^\/contatos\/?$/i', $url))
+else if($metodo == 'POST' && preg_match('/^\/contatos\/?$/', $url))
 {
   cadastrar();
 }
